@@ -23,6 +23,14 @@ module TestBench
       end
       attr_writer :session
 
+      def call(path)
+        if ::Dir.exist?(path)
+          directory(path)
+        else
+          file(path)
+        end
+      end
+
       def directory(directory)
         glob_pattern = ::File.join(directory, '**', '*.rb')
 
