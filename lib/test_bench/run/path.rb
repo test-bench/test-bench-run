@@ -23,6 +23,20 @@ module TestBench
       end
       attr_writer :session
 
+      def self.build(session: nil)
+        instance = new
+        Fixture::Session.configure(instance, session:, attr_name: :session)
+        Random.configure(instance)
+        instance
+      end
+
+      def self.configure(receiver, session: nil, attr_name: nil)
+        attr_name ||= :run_path
+
+        instance = build(session:)
+        receiver.public_send(:"#{attr_name}=", instance)
+      end
+
       def call(path)
         if ::Dir.exist?(path)
           directory(path)
