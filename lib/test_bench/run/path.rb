@@ -23,6 +23,14 @@ module TestBench
       end
       attr_writer :session
 
+      def directory(directory)
+        glob_pattern = ::File.join(directory, '**', '*.rb')
+
+        ::Dir.glob(glob_pattern) do |file|
+          file(file)
+        end
+      end
+
       def file(file)
         if File.fnmatch?(exclude_file_pattern, file)
           return

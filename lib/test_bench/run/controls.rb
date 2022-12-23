@@ -10,3 +10,4 @@ require 'test_bench/run/controls/events/file_finished'
 require 'test_bench/run/controls/events/crashed'
 
 require 'test_bench/run/controls/file'
+require 'test_bench/run/controls/directory'
