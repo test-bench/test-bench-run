@@ -23,6 +23,13 @@ module TestBench
         instance.(path, *paths, &block)
       end
 
+      def self.configure(receiver, exclude_file_pattern: nil, attr_name: nil)
+        attr_name ||= :get_files
+
+        instance = build(exclude_file_pattern:)
+        receiver.public_send(:"#{attr_name}=", instance)
+      end
+
       def call(path, *paths, &block)
         paths = [path, *paths]
 
