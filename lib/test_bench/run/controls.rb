@@ -17,3 +17,5 @@ require 'test_bench/run/controls/events/started'
 require 'test_bench/run/controls/events/finished'
 
 require 'test_bench/run/controls/directory'
+
+require 'test_bench/run/controls/path'
