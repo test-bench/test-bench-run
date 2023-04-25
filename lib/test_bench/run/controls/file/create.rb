@@ -23,6 +23,45 @@ module TestBench
           def self.directory
             'tmp'
           end
+
+          module Pass
+            def self.call(directory: nil)
+              Create.(contents:, directory:)
+            end
+
+            def self.contents
+              Create.contents
+            end
+          end
+
+          module Failure
+            def self.call(session: nil, directory: nil)
+              contents = contents(session:)
+
+              Create.(contents:, directory:)
+            end
+
+            def self.contents(session: nil)
+              session ||= Session.new
+
+              <<~RUBY
+              session = ObjectSpace._id2ref(#{session.object_id})
+              session.test do
+                session.assert(false)
+              end
+              RUBY
+            end
+          end
+
+          module Crash
+            def self.call(directory: nil)
+              Create.(contents:, directory:)
+            end
+
+            def self.contents
+              "raise #{Exception}.example"
+            end
+          end
         end
       end
     end
