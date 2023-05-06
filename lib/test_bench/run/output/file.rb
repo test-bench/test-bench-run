@@ -19,6 +19,10 @@ module TestBench
         alias :only_failure? :only_failure
         attr_writer :only_failure
 
+        def handle_event_data(event_data)
+          pend(event_data)
+        end
+
         def pend_event(event_data)
           process_id = event_data.process_id
 
