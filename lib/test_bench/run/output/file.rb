@@ -11,6 +11,14 @@ module TestBench
         end
         attr_writer :pended_events
 
+        def only_failure
+          @only_failure.nil? ?
+            @only_failure = Defaults.only_failure :
+            @only_failure
+        end
+        alias :only_failure? :only_failure
+        attr_writer :only_failure
+
         def pend_event(event_data)
           process_id = event_data.process_id
 
@@ -44,6 +52,12 @@ module TestBench
 
         def started?(process_id)
           pended_events.key?(process_id)
+        end
+
+        module Defaults
+          def self.only_failure
+            ENV.fetch('TEST_BENCH_ONLY_FAILURE', 'off') == 'on'
+          end
         end
       end
     end
