@@ -15,6 +15,12 @@ module TestBench
           end
           attr_writer :failure_summary
 
+          handle FileStarted do |file_started|
+            file = file_started.file
+
+            start_file(file)
+          end
+
           def start_file(file)
             if not current_file.nil?
               raise StateError, "Already started file #{current_file.file.inspect} (File: #{file.inspect})"
