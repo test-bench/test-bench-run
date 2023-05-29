@@ -8,3 +8,4 @@ require 'test_bench/run/get_files/substitute'
 require 'test_bench/run/file'
 
 require 'test_bench/run/output/file'
+require 'test_bench/run/output/summary/error'
