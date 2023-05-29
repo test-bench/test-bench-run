@@ -20,6 +20,16 @@ module TestBench
             self.current_file = file
           end
 
+          def current_file?(file=nil)
+            return false if current_file.nil?
+
+            if not file.nil?
+              file == current_file.file
+            else
+              true
+            end
+          end
+
           File = Struct.new(:file, :failures, :error_message) do
             def self.build(file)
               failures = 0
