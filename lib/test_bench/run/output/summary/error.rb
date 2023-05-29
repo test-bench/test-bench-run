@@ -21,6 +21,10 @@ module TestBench
             start_file(file)
           end
 
+          handle Session::Events::Failed do
+            current_file.record_failure
+          end
+
           def start_file(file)
             if not current_file.nil?
               raise StateError, "Already started file #{current_file.file.inspect} (File: #{file.inspect})"
@@ -64,6 +68,10 @@ module TestBench
               failures = 0
 
               new(file, failures)
+            end
+
+            def record_failure
+              self.failures += 1
             end
           end
         end
