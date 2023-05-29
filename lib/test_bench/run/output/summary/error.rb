@@ -10,6 +10,11 @@ module TestBench
 
           attr_accessor :current_file
 
+          def failure_summary
+            @failure_summary ||= {}
+          end
+          attr_writer :failure_summary
+
           def start_file(file)
             if not current_file.nil?
               raise StateError, "Already started file #{current_file.file.inspect} (File: #{file.inspect})"
@@ -18,6 +23,24 @@ module TestBench
             file = File.build(file)
 
             self.current_file = file
+          end
+
+          def finish_file(file, result=nil, error_message: nil)
+            result ||= false
+
+            if not current_file?(file)
+              raise StateError, "Cannot finish file #{file.inspect} (Current File: #{current_file&.file.inspect})"
+            end
+
+            if not result
+              if not error_message.nil?
+                current_file.error_message = error_message
+              end
+
+              failure_summary[file] = current_file
+            end
+
+            self.current_file = nil
           end
 
           def current_file?(file=nil)
