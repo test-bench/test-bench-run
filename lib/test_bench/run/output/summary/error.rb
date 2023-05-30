@@ -32,6 +32,14 @@ module TestBench
             finish_file(file, result)
           end
 
+          handle FileCrashed do |file_crashed|
+            file = file_crashed.file
+
+            error_message = file_crashed.error_message
+
+            finish_file(file, error_message:)
+          end
+
           def start_file(file)
             if not current_file.nil?
               raise StateError, "Already started file #{current_file.file.inspect} (File: #{file.inspect})"
