@@ -13,6 +13,13 @@ module TestBench
             @files ||= []
           end
 
+          attr_accessor :started
+          def started? = !!started
+
+          def start
+            self.started = true
+          end
+
           def execute(file)
             files << file
           end
