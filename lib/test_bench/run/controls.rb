@@ -22,3 +22,5 @@ require 'test_bench/run/controls/path'
 
 require 'test_bench/run/controls/event_data'
 require 'test_bench/run/controls/events/session'
+
+require 'test_bench/run/controls/executor'
