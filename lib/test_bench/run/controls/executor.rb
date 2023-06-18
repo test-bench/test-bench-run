@@ -11,6 +11,13 @@ module TestBench
 
           attr_accessor :executed_file
 
+          attr_accessor :started
+          def started? = !!started
+
+          def start
+            self.started = true
+          end
+
           def execute(file)
             self.executed_file = file
           end
