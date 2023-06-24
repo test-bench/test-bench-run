@@ -18,6 +18,13 @@ module TestBench
       end
       attr_writer :random
 
+      def self.build(session: nil)
+        instance = new
+        Session.configure(instance, session:)
+        Random.configure(instance)
+        instance
+      end
+
       def call(file)
         random.reset(file)
 
