@@ -13,3 +13,4 @@ require 'test_bench/run/output/summary'
 
 require 'test_bench/run/executor'
 require 'test_bench/run/executor/substitute'
+require 'test_bench/run/executor/serial'
