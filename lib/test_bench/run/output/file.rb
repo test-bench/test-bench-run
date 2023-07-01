@@ -5,6 +5,7 @@ module TestBench
         Error = Class.new(RuntimeError)
 
         include TestBench::Output
+        include Events
 
         def pended_events
           @pended_events ||= {}
@@ -18,6 +19,12 @@ module TestBench
         end
         alias :only_failure? :only_failure
         attr_writer :only_failure
+
+        handle FileStarted do |file_started|
+          process_id = file_started.metadata.process_id
+
+          start(process_id)
+        end
 
         def handle_event_data(event_data)
           pend(event_data)
