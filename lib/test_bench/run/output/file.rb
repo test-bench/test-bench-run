@@ -7,6 +7,11 @@ module TestBench
         include TestBench::Output
         include Events
 
+        def session_output
+          @session_output ||= TestBench::Output::Substitute.build
+        end
+        attr_writer :session_output
+
         def pended_events
           @pended_events ||= {}
         end
@@ -19,6 +24,12 @@ module TestBench
         end
         alias :only_failure? :only_failure
         attr_writer :only_failure
+
+        def configure(...)
+          TestBench::Session::Output::Writer.configure(self, ...)
+
+          Session::Output.configure(self, writer:, attr_name: :session_output)
+        end
 
         handle FileStarted do |file_started|
           process_id = file_started.metadata.process_id
