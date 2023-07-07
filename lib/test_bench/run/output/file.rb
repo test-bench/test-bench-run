@@ -45,6 +45,15 @@ module TestBench
           finish_process(process_id, result, file)
         end
 
+        handle FileCrashed do |file_crashed|
+          process_id = file_crashed.metadata.process_id
+          file = file_crashed.file
+
+          result = false
+
+          finish_process(process_id, result, file)
+        end
+
         def finish_process(process_id, result, file)
           events = pended_events.delete(process_id)
 
