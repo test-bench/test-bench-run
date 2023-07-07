@@ -37,6 +37,39 @@ module TestBench
           start(process_id)
         end
 
+        handle FileFinished do |file_finished|
+          process_id = file_finished.metadata.process_id
+          result = file_finished.result
+          file = file_finished.file
+
+          finish(process_id, result, file)
+        end
+
+        def finish(process_id, result, file)
+          events = pended_events.delete(process_id)
+
+          if only_failure && result
+            return
+          end
+
+          writer.puts("Running #{file}")
+
+          writer_sequence = writer.sequence
+
+          events ||= []
+          events.each do |event_data|
+            session_output.receive(event_data)
+          end
+
+          if writer.current?(writer_sequence)
+            writer.
+              style(:faint).
+              puts("(Nothing written)")
+
+            writer.puts
+          end
+        end
+
         def handle_event_data(event_data)
           pend(event_data)
         end

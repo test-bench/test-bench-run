@@ -21,3 +21,4 @@ require 'test_bench/run/controls/directory'
 require 'test_bench/run/controls/path'
 
 require 'test_bench/run/controls/event_data'
+require 'test_bench/run/controls/events/session'
