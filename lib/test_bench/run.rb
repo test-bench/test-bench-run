@@ -9,3 +9,4 @@ require 'test_bench/run/file'
 
 require 'test_bench/run/output/file'
 require 'test_bench/run/output/summary/error'
+require 'test_bench/run/output/summary'
