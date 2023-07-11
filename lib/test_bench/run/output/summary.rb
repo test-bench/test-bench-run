@@ -31,6 +31,16 @@ module TestBench
         end
         attr_writer :contexts_skipped
 
+        def files_finished
+          @files_finished ||= 0
+        end
+        attr_writer :files_finished
+
+        def files_crashed
+          @files_crashed ||= 0
+        end
+        attr_writer :files_crashed
+
         handle TestFinished do |test_finished|
           self.tests_finished += 1
 
@@ -47,6 +57,14 @@ module TestBench
 
         handle ContextSkipped do
           self.contexts_skipped += 1
+        end
+
+        handle FileFinished do
+          self.files_finished += 1
+        end
+
+        handle FileCrashed do
+          self.files_crashed += 1
         end
       end
     end
