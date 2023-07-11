@@ -2,6 +2,8 @@ module TestBench
   class Run
     module Output
       class Summary
+        StateError = Class.new(RuntimeError)
+
         include TestBench::Output
         include Session::Events
         include Events
@@ -42,6 +44,8 @@ module TestBench
         attr_writer :files_crashed
 
         attr_accessor :start_time
+        attr_accessor :finish_time
+        attr_accessor :elapsed_time
 
         handle TestFinished do |test_finished|
           self.tests_finished += 1
@@ -73,6 +77,17 @@ module TestBench
           start_time = started.metadata.time
 
           self.start_time = start_time
+        end
+
+        def record_finish_time(finish_time)
+          if start_time.nil?
+            raise StateError, "Start time isn't set"
+          end
+
+          self.finish_time = finish_time
+
+          elapsed_time = finish_time - start_time
+          self.elapsed_time = elapsed_time
         end
       end
     end
