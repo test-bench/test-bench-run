@@ -21,6 +21,16 @@ module TestBench
         end
         attr_writer :tests_failed
 
+        def tests_skipped
+          @tests_skipped ||= 0
+        end
+        attr_writer :tests_skipped
+
+        def contexts_skipped
+          @contexts_skipped ||= 0
+        end
+        attr_writer :contexts_skipped
+
         handle TestFinished do |test_finished|
           self.tests_finished += 1
 
@@ -29,6 +39,14 @@ module TestBench
           else
             self.tests_failed += 1
           end
+        end
+
+        handle TestSkipped do
+          self.tests_skipped += 1
+        end
+
+        handle ContextSkipped do
+          self.contexts_skipped += 1
         end
       end
     end
