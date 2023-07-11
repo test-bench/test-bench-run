@@ -40,6 +40,49 @@ module TestBench
             finish_file(file, error_message:)
           end
 
+          handle Finished do |finished|
+            if not finished.result
+              print_summary
+            end
+          end
+
+          def print_summary
+            writer.style(:bold, :underline, :red).puts("Failure Summary:")
+
+            failure_summary.each_value do |file_record|
+              file, failures, error_message = file_record.to_a
+
+              writer
+                .style(:faint, :red)
+                .print("-")
+                .style(:reset_intensity, :bold)
+                .print(" #{file}")
+                .style(:reset_intensity)
+                .print(":")
+
+              if failures > 0
+                writer.print(" %i failure%s" % [
+                  failures,
+                  failures == 1 ? '' : 's'
+                ])
+
+                if not error_message.nil?
+                  writer.print(".")
+                end
+              end
+
+              if not error_message.nil?
+                writer.puts(" File crashed, error:")
+
+                writer.style(:red).puts("  #{error_message}")
+              else
+                writer.puts
+              end
+
+              writer.puts
+            end
+          end
+
           def start_file(file)
             if not current_file.nil?
               raise StateError, "Already started file #{current_file.file.inspect} (File: #{file.inspect})"
