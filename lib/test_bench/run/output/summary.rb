@@ -89,6 +89,85 @@ module TestBench
           elapsed_time = finish_time - start_time
           self.elapsed_time = elapsed_time
         end
+
+        def finish
+          writer.print("Finished running %i file%s, " % [
+            files_finished,
+            files_finished == 1 ? '' : 's'
+          ])
+
+          if files_crashed > 0
+            writer
+              .style(:bold, :red)
+              .puts("%i file%s crashed" % [
+                files_crashed,
+                files_crashed == 1 ? '' : 's'
+              ])
+          else
+            writer.puts("0 files crashed")
+          end
+
+          writer.print("Ran %i test%s" % [
+            tests_finished,
+            tests_finished == 1 ? '' : 's'
+          ])
+
+          if not elapsed_time.nil?
+            tests_per_second = tests_finished / elapsed_time
+            writer.print(" in %0.3fs (%i test%s/second)" % [
+              elapsed_time,
+              tests_per_second,
+              tests_finished == 1 ? '' : 's'
+            ])
+          end
+          writer.puts
+
+          skip_count = tests_skipped + contexts_skipped
+
+          if tests_passed > 0
+            if skip_count.zero? && tests_failed.zero?
+              writer.style(:bold)
+            end
+
+            writer
+              .style(:green)
+              .print("#{tests_passed} passed")
+              .style(:reset_fg)
+
+            if skip_count.zero? && tests_failed.zero?
+              writer.style(:reset_intensity)
+            end
+          else
+            writer
+              .style(:bold, :faint, :italic)
+              .print("0 passed")
+              .style(:reset_italic, :reset_intensity)
+          end
+          writer.print(", ")
+
+          if skip_count.zero?
+            writer.print("0 skipped")
+          else
+            writer
+              .style(:bold, :yellow)
+              .print("%i%s skipped" % [
+                skip_count,
+                contexts_skipped > 0 ? '+' : ''
+              ])
+              .style(:reset_fg, :reset_intensity)
+          end
+          writer.print(", ")
+
+          if tests_failed > 0
+            writer
+              .style(:bold, :red)
+              .puts("#{tests_failed} failed")
+          else
+            writer.puts("0 failed")
+          end
+
+          writer.puts
+        end
       end
     end
   end
