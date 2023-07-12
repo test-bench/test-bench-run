@@ -79,6 +79,14 @@ module TestBench
           self.start_time = start_time
         end
 
+        handle Finished do |finished|
+          finish_time = finished.metadata.time
+
+          record_finish_time(finish_time)
+
+          finish
+        end
+
         def record_finish_time(finish_time)
           if start_time.nil?
             raise StateError, "Start time isn't set"
