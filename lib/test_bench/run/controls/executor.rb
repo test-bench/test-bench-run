@@ -17,6 +17,13 @@ module TestBench
           attr_accessor :finished
           def finished? = !!finished
 
+          attr_accessor :configured
+          def configured? = !!configured
+
+          def configure
+            self.configured = true
+          end
+
           def start
             self.started = true
           end
