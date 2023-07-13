@@ -34,6 +34,28 @@ module TestBench
     end
     attr_writer :path_sequence
 
+    def self.build(exclude: nil)
+      instance = new
+
+      GetFiles.configure(instance, exclude_file_pattern: exclude)
+
+      Executor::Serial.configure(instance)
+
+      Random.configure(instance)
+
+      session = Session.build do |telemetry|
+        Output::File.register(telemetry)
+        Output::Summary::Error.register(telemetry)
+        Output::Summary.register(telemetry)
+
+        instance.telemetry = telemetry
+      end
+
+      Session.configure(instance, session:)
+
+      instance
+    end
+
     def call(path)
       run do
         path(path)
