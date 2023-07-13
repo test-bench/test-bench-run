@@ -9,6 +9,9 @@ module TestBench
       def execute(file)
         raise AbstractMethodError, "Subclass didn't implement execute (File: #{file.inspect})"
       end
+
+      def finish
+      end
     end
   end
 end
