@@ -3,6 +3,16 @@ module TestBench
     module Executor
       AbstractMethodError = Class.new(RuntimeError)
 
+      def self.included(cls)
+        cls.class_exec do
+          extend Build
+          extend Configure
+        end
+      end
+
+      def configure
+      end
+
       def start
       end
 
@@ -11,6 +21,23 @@ module TestBench
       end
 
       def finish
+      end
+
+      module Build
+        def build
+          instance = new
+          instance.configure
+          instance
+        end
+      end
+
+      module Configure
+        def configure(receiver, attr_name: nil)
+          attr_name ||= :executor
+
+          instance = build
+          receiver.public_send(:"#{attr_name}=", instance)
+        end
       end
     end
   end
