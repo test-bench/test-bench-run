@@ -34,6 +34,12 @@ module TestBench
     end
     attr_writer :path_sequence
 
+    def call(path)
+      run do
+        path(path)
+      end
+    end
+
     def run(&block)
       if ran?
         raise Error, "Already ran"
