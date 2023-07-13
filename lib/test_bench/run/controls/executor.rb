@@ -14,6 +14,9 @@ module TestBench
           attr_accessor :started
           def started? = !!started
 
+          attr_accessor :finished
+          def finished? = !!finished
+
           def start
             self.started = true
           end
@@ -24,6 +27,10 @@ module TestBench
 
           def executed?(file)
             executed_file == file
+          end
+
+          def finish
+            self.finished = true
           end
         end
 
