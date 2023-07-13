@@ -56,6 +56,16 @@ module TestBench
       instance
     end
 
+    def self.call(path, session_store: nil, exclude: nil)
+      session_store ||= Session::Store.instance
+
+      instance = build(exclude:)
+
+      session_store.reset(instance.session)
+
+      instance.(path)
+    end
+
     def call(path)
       run do
         path(path)
