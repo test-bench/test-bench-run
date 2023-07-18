@@ -35,5 +35,9 @@ module TestBench
       session.record_failure
     end
     alias :<< :path
+
+    def ran?
+      path_sequence > 0
+    end
   end
 end
