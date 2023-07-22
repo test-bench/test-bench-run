@@ -66,6 +66,13 @@ module TestBench
       instance.(path)
     end
 
+    def self.configure(receiver, exclude_file_pattern: nil, attr_name: nil)
+      attr_name ||= :run
+
+      instance = build(exclude_file_pattern:)
+      receiver.public_send(:"#{attr_name}=", instance)
+    end
+
     def call(path)
       run do
         path(path)
