@@ -41,6 +41,8 @@ module TestBench
         end
         attr_writer :files_crashed
 
+        attr_accessor :start_time
+
         handle TestFinished do |test_finished|
           self.tests_finished += 1
 
@@ -65,6 +67,12 @@ module TestBench
 
         handle FileCrashed do
           self.files_crashed += 1
+        end
+
+        handle Started do |started|
+          start_time = started.metadata.time
+
+          self.start_time = start_time
         end
       end
     end
