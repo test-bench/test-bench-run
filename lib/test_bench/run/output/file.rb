@@ -54,6 +54,9 @@ module TestBench
           finish(process_id, result, file)
         end
 
+        handle Started do
+        end
+
         def finish(process_id, result, file)
           events = pended_events.delete(process_id)
 
