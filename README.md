@@ -1,12 +1,10 @@
 # Test Bench Run
 
-*[Summary goes here]*
-
-*[Description goes here]*
+Runs a batch of TestBench files and directories.
 
 ## Documentation
 
-*[Link to documentation goes here]*
+See the [TestBench website](http://test-bench.software) for more information, examples, and user guides.
 
 ## License
 
