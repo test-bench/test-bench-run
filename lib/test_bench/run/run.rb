@@ -94,7 +94,7 @@ module TestBench
     def call(&block)
       block.(self)
 
-      session.isolate.stop
+      session.close
 
       if print_summary?
         summary.print

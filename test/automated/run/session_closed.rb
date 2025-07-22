@@ -1,7 +1,7 @@
 require_relative '../automated_init'
 
 context "Run" do
-  context "Session Isolate" do
+  context "Session Closed" do
     run = Run.new
 
     isolate = run.session.isolate
@@ -9,8 +9,10 @@ context "Run" do
 
     run.() {}
 
-    test "Stopped" do
-      assert(isolate.stopped?)
+    closed = isolate.stopped?
+
+    test do
+      assert(closed)
     end
   end
 end
