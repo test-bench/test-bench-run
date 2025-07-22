@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |spec|
   spec.name = 'test_bench-run'
-  spec.version = '3.0.0.0'
+  spec.version = '3.0.0.1'
 
   spec.summary = "Runs a batch of TestBench files and directories"
   spec.description = <<~TEXT.each_line(chomp: true).map(&:strip).join(' ')
