@@ -117,9 +117,6 @@ module TestBench
 
         session.execute(file_path)
       end
-
-    rescue SelectFiles::PathNotFoundError
-      session.execute(path)
     end
     alias :<< :path
 
